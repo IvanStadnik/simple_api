@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('api.v1.urls')),
     # Swagger UI
-    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('', include('accounts.urls'), name='accounts'),
+    path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     # OpenAPI schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # ReDoc (optional)

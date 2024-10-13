@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <ul>
+        <li><a href="{% url 'swagger-ui' %}">Swagger</a></li>
+        <li><a href="{% url 'schema' %}">API schemat</a></li>
+        <li><a href="{% url 'redoc' %}">API Docs</a></li>
+    </ul>
+{% endblock %}
