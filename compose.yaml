@@ -11,6 +11,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - REDIS_HOST=${REDIS_HOST}
+      - POSTGRES_HOST=${POSTGRES_HOST}
     depends_on:
       - db
       - redis
@@ -24,9 +25,14 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - sa_postgres_data:/var/lib/postgresql/data/
+#    healthcheck:
+#      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
   redis:
     image: redis:latest
@@ -39,7 +45,7 @@ services:
 
   celery:
     build: .
-    command: celery -A your_project_name worker --loglevel=info
+    command: celery -A simple_api worker --loglevel=info
     volumes:
       - .:/app
     environment:

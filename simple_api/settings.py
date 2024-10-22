@@ -75,12 +75,32 @@ WSGI_APPLICATION = 'simple_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'mydatabase'),
+        'USER': os.environ.get('POSTGRES_USER', 'myuser'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'mypassword'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.postgresql',
+#     #     'NAME': 'typefast',
+#     #     'USER': 'typefast',
+#     #     'PASSWORD': 'n1f2q3g1@',
+#     #     'HOST': 'localhost',  # Set to empty string for localhost.
+#     #     'PORT': '5433',       # Set to empty string for default.
+#     # }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -160,3 +180,9 @@ LOGGING = {
         },
     },
 }
+
+
+# Celery
+CELERY_TIMEZONE = "Europe/Kyiv"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
